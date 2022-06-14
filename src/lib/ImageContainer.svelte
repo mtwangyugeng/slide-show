@@ -5,12 +5,16 @@
 
     export let width = 400;
     export let height = 400;
+    
+    export let i;
+    export let slideIndex;
+
 </script>
 
 <div>
-    <section style={`width: ${width}px; height: ${height}px`}>
+    <section class={slideIndex === i && 'Active'} style={`width: ${width}px; height: ${height}px`}>
         <div class=Background style={`background-image: url(${url})`}/>
-        <img src={url} alt={title} />
+        <img src={url} alt={title} draggable=false/>
     </section>
     <p>{description}</p>
 </div>
@@ -22,11 +26,15 @@
         align-items: center;
 
         position: relative;
+        user-select: none;
 
-
+        transform: scale(0.7);
+        transition: transform 200ms;
     }
 
-
+    .Active {
+        transform: scale(1);
+    }
 
     .Background {
         position: absolute;
