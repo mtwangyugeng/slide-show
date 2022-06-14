@@ -1,5 +1,5 @@
 <script>
-import ImgSlideshow from "./lib/ImgSlideshow.svelte";
+import ImgSlideshow from "./lib/img-slide-show/ImgSlideshow.svelte";
 
 </script>
 
