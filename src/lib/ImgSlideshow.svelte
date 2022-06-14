@@ -39,6 +39,7 @@ import ImageContainer from "./ImageContainer.svelte";
 
     let beenRight = false;
     let beenLeft = false;
+
     function handleMouseDown(e) {
         isDragging = true;
         tempPositonX = positionX;
@@ -48,7 +49,6 @@ import ImageContainer from "./ImageContainer.svelte";
          beenRight = false;
          beenLeft = false;
     }
-
    
     function handleMousemove(e) {
         if (!isDragging)
@@ -85,13 +85,24 @@ import ImageContainer from "./ImageContainer.svelte";
     function handleMouseUp() {
         isDragging = false;
     }
+
+    function handleTouchStart(e) {
+        handleMouseDown(e.touches[0]);
+    }
+    function handleTouchMove(e) {
+        handleMousemove(e.touches[0]);
+    }
+    function handleTouchEnd() {
+        handleMouseUp()
+    }
+
 </script>
 
-<svelte:window on:mouseup={handleMouseUp}/>
+<svelte:window on:mouseup={handleMouseUp} on:touchend={handleTouchEnd}/>
 
 <section>
     <button on:click={handleLeft}>left</button>
-    <div class=SlideContainer style={`width: ${width}px`} on:mousedown={handleMouseDown} on:mousemove={handleMousemove}>
+    <div class=SlideContainer style={`width: ${width}px`} on:mousedown={handleMouseDown} on:touchstart={handleTouchStart} on:mousemove={handleMousemove} on:touchmove={handleTouchMove} >
         <span style={`transform: translateX(-${isDragging? tempPositonX :positionX}px);${isDragging && `transition: transform 0s;`}`}>
         {#each imgs as img, i (i)}
             <ImageContainer {...img} width={width} height={height} i={i} slideIndex={slideIndex}/>
